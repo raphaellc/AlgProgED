@@ -23,6 +23,8 @@ public:
     virtual void postOrder() const = 0;
 
     virtual void levelOrder() const = 0;
+
+    //virtual std::string toString() const = 0;
 };
 
 template <typename K, typename V>

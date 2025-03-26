@@ -3,6 +3,11 @@
 #include <functional>
 
 template <typename K, typename V>
+BinarySearchTree<K, V>::BinarySearchTree() : root(nullptr) {
+    
+}
+
+template <typename K, typename V>
 BinarySearchTree<K, V>::~BinarySearchTree()  {
     clear();
 }
@@ -57,7 +62,7 @@ Node<K, V>* BinarySearchTree<K, V>::insert(Node<K, V>* node, const K& key, const
     return node;
 }
 
-template <typename K, typename V>
+/*template <typename K, typename V>
 std::string BinarySearchTree<K, V>::toString() const {
     if (root == nullptr) {
         return "[empty]";
@@ -67,7 +72,7 @@ std::string BinarySearchTree<K, V>::toString() const {
         return sb.str();
     }
 }
-
+*/
 template <typename K, typename V>
 std::string BinarySearchTree<K, V>::printTree(std::ostringstream& sb) const {
     if (root->getRight() != nullptr) {
@@ -98,13 +103,16 @@ bool BinarySearchTree<K, V>::deleteNode(const K& key) {
 
 template <typename K, typename V>
 bool BinarySearchTree<K, V>::deleteByCopying(const K& key) {
+    std::cout << "deleteByCopying(" << key << ")" << std::endl; // Print function call
+
     Node<K, V>* parent = nullptr;
     Node<K, V>* current = root;
     for (; current != nullptr && key != current->getKey(); parent = current, current = current->next(key));
 
-    if (current == nullptr)
+    if (current == nullptr) {
+        std::cout << "retorno deleteByCopying(" << key << ") - not found" << std::endl;
         return false;
-    else if (current->getLeft() != nullptr && current->getRight() != nullptr) {
+    } else if (current->getLeft() != nullptr && current->getRight() != nullptr) {
         // Caso 3
         Node<K, V>* tmp = current->getLeft();
         while (tmp->getRight() != nullptr) tmp = tmp->getRight();
@@ -117,6 +125,7 @@ bool BinarySearchTree<K, V>::deleteByCopying(const K& key) {
         else if (parent->getLeft() == current) parent->setLeft(nextNode);
         else parent->setRight(nextNode);
     }
+    std::cout << "retorno deleteByCopying(" << key << ")" << std::endl;
     return true;
 }
 template <typename K, typename V>
